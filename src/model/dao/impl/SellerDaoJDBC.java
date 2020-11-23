@@ -55,7 +55,7 @@ public class SellerDaoJDBC implements SellerDao {
 			// TODO: handle exception
 			throw new DbException(e.getMessage());
 		} finally {
-			DB.closeStatements(statement);
+			DB.closeStatement(statement);
 		}
 
 	}
@@ -84,15 +84,27 @@ public class SellerDaoJDBC implements SellerDao {
 			// TODO: handle exception
 			throw new DbException(e.getMessage());
 		} finally {
-			DB.closeStatements(statement);
+			DB.closeStatement(statement);
 		}
 
 	}
 
 	@Override
-	public void deleteById(Seller obj) {
-		// TODO Auto-generated method stub
-
+	public void deleteById(Integer idInteger) {
+		PreparedStatement statement = null;
+		try {
+			statement = connection.prepareStatement("DELETE FROM seller WHERE Id = ?");
+			statement.setInt(1, idInteger);
+			int affectedRows = statement.executeUpdate();
+			if(affectedRows == 0) {
+				throw new DbException("Não existe id para deletar");
+			}
+		}catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(statement);
+		}
 	}
 
 	@Override
@@ -117,7 +129,7 @@ public class SellerDaoJDBC implements SellerDao {
 		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
 		} finally {
-			DB.closeStatements(statement);
+			DB.closeStatement(statement);
 			DB.closeResultSet(resultSet);
 		}
 
@@ -151,7 +163,7 @@ public class SellerDaoJDBC implements SellerDao {
 		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
 		} finally {
-			DB.closeStatements(statement);
+			DB.closeStatement(statement);
 			DB.closeResultSet(resultSet);
 		}
 	}
@@ -184,7 +196,7 @@ public class SellerDaoJDBC implements SellerDao {
 		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
 		} finally {
-			DB.closeStatements(statement);
+			DB.closeStatement(statement);
 			DB.closeResultSet(resultSet);
 		}
 	}
