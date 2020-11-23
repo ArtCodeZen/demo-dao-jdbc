@@ -52,7 +52,7 @@ public class Program {
 		int id = scanner.nextInt();
 		sellerDao.deleteById(id);
 		System.out.println("Delete completed!");
-		
+		scanner.close();
 		
 		
 	}
